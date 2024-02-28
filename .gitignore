@@ -1,3 +1,9 @@
+#Specific files
+testing_notebook.ipynb
+
+#VS-Code specific
+*.code-workspace
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
