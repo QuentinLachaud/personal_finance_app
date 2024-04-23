@@ -1,7 +1,7 @@
 google_api_python_client==2.74.0
 gsheetsdb==0.1.13.1
 matplotlib==3.5.2
-numpy==1.22.0
+numpy==1.26.4
 pandas==1.4.3
 Pillow==9.4.0
 protobuf==4.21.12
