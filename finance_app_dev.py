@@ -22,11 +22,7 @@ from src.classes import Asset, Debt
 from src.utils import project_returns, random_walk, make_net_worth_df, change_text_colour, generate_retirement_portfolio
 
 from src.data import top_tickers
-
-#############
-# Functions #
-#############
-
+from src.classes import streamlit_tab
 
 #################
 # Page settings #
@@ -39,10 +35,18 @@ st.set_page_config(layout="wide")
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(['Investments', 'a', 'Net Worth', 'Mortgage', 'Stocks', 'debug', 'Early_retirement', 'Early Retirement_beta'])
 
 #make a dict display_tab with bools
-display_tab = {tab1: True, tab2: False, tab3: True, tab4: True, tab5: True, tab6: False, tab7: True, tab8: False}
+display_tab = {
+                'tab1': True,
+                'tab2': False,
+                'tab3': True,
+                'tab4': True,
+                'tab5': True,
+                'tab6': False,
+                'tab7': True,
+                'tab8': False
+            }
 
 
-from src.classes import streamlit_tab
 
 
 
