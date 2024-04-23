@@ -9,5 +9,5 @@ Tab activation/deactivation
  - The tab in question must be listed in the if chain below. Luckily, inactive tabs do not break this if present here.
 
 This is necessary due to how streamlit creates tabs. If instead a tab could be separately created (e.g. st.tab(['example_tab'])) the above would be much more dynamic.
-As stated on the Streamlit website, this is not yet implemented: [streamlit tabs docu] (https://docs.streamlit.io/develop/api-reference/layout/st.tabs)
+As stated on their website, this is not yet implemented: [streamlit tabs docu](https://docs.streamlit.io/develop/api-reference/layout/st.tabs)
 
