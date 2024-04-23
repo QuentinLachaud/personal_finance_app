@@ -407,7 +407,6 @@ def render_debug_tab():
         st.line_chart(resampled_df)
 
 def render_early_retirement_tab():
-    import streamlit_vertical_slider as svs
 
     title_col1, title_col2 = st.columns([1, 1])
     with title_col1:
