@@ -1,4 +1,3 @@
-from gsheetsdb import connect
 from matplotlib import pyplot as plt
 from PIL import Image
 from google.oauth2 import service_account
