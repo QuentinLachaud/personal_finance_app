@@ -60,6 +60,8 @@ with questions:
 
 def render_compound_interest_tab():
     st.title('Compound Interest Calculator')
+    st.write(':grey[_Observe how a given investment grows over time given your inputs._]', help='Historical average % returns are used as baselines. Adjust as needed.')
+
     st.divider()
     input_col_1, graph_col = st.columns([1, 4]) 
 
