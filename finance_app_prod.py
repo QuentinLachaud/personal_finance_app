@@ -38,7 +38,7 @@ page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 
 with page_info:
 
     with st.popover("Welcome!"):
-        st.markdown("Welcome to the personal finance app. This app is designed to help you manage your finances and plan for the future. You can use the tabs at the top of the page to navigate between different sections of the app. If you have any questions or need help, please don't hesitate to ask.")
+        st.markdown("Welcome to the personal finance app. This app is designed to help you manage your finances and plan for the future. You can use the tabs at the top of the page to navigate between different sections of the app.")
 
 with questions:
 
@@ -46,8 +46,8 @@ with questions:
 
     with st.popover(':green[Questions?]'):
 
-        st.markdown('Send message directly to the Developper:')
-        st.markdown('*(e.g. questions, feature requests, bugs!), it\'s free!*')
+        st.markdown('Send message directly to the site admin:')
+        st.markdown('*(e.g. questions, feature requests, bugs!)*')
         user_msg = st.text_input('Your message here')
         
         if st.button('Send'):
