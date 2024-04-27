@@ -26,7 +26,7 @@ import os
 ################
 # Email config #
 ################
-from dotenv import load_dotenv
+from python-dotenv import load_dotenv
 
 load_dotenv()
 domain_name = os.getenv('DOMAIN_NAME')
