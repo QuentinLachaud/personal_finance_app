@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import requests
 
 from src.classes import Asset
 
@@ -101,3 +102,27 @@ def generate_retirement_portfolio(ret, vol, years=10, periods=1, sims=1, investm
     cumulative_returns_df = daily_returns_df * investment
 
     return cumulative_returns_df
+
+# Email function
+
+def send_email(domain=None, 
+                api_key=None,
+                sender='Finance App User email <mailgun@sandbox0c9e2ec800744d16b2acc7161367079f.mailgun.org>',
+                receiver='finance.app.queries@gmail.com',
+                subject='User message',
+                body=''):
+    """
+    Function to send email using Mailgun API to a specified email address
+    Note: The email recipient must agree to receiving emails from mailgun.
+    This is done by sending a request from MailGun account (manually), and it being approved and fished out of spam folder by user.
+    
+    Intended use is to send emails to gmail containing user comments as a simple mode of communication."""
+    
+    response = requests.post(f"https://api.mailgun.net/v3/{domain}/messages",
+                             auth=("api", api_key),
+                             data={"from": sender,
+                                   "to": [receiver],
+                                   "subject": subject,
+                                   "text": body})
+    
+    return response.status_code
