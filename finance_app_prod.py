@@ -22,12 +22,17 @@ from src.utils import project_returns, random_walk, make_net_worth_df, change_te
 
 from src.data import top_tickers
 from src.classes import streamlit_tab
+import os
+################
+# Email config #
+################
 
+domain_name = os.getenv('DOMAIN_NAME')
+api_key     = os.getenv('API_KEY')
 
 #################
 # Page settings #
 #################
-
 
 plt.style.use('dark_background')
 st.set_page_config(layout="wide")

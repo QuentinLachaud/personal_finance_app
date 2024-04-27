@@ -27,16 +27,19 @@ from src.classes import streamlit_tab
 #################
 # Page settings #
 #################
-
-
-plt.style.use('dark_background')
 st.set_page_config(layout="wide")
+
+# page_style_toggle = st.toggle(label='Dark mode', value=False)
+# if page_style_toggle == True:
+#     st.toggle('Light Mode', value=True)
+#     plt.style.use('default')
+# else:
+#     plt.style.use('dark_background')
 
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(['Investments', 'a', 'Net Worth', 'Mortgage', 'Stocks', 'debug', 'Early_retirement', 'Early Retirement_beta'])
 
 #make a dict display_tab with bools
-display_tab = {
-                'tab1': True,
+display_tab = {'tab1': True,
                 'tab2': False,
                 'tab3': True,
                 'tab4': True,
@@ -51,7 +54,7 @@ display_tab = {
 
 
 
-if display_tab[tab1]:
+if display_tab['tab1']:
 
     #########
     # TAB 1 #
@@ -126,7 +129,7 @@ if display_tab[tab1]:
 
         # Tab1 END -------------------------------------------------
 
-if display_tab[tab2]:
+if display_tab['tab2']:
 
     #########
     # TAB 2 #
@@ -174,7 +177,7 @@ if display_tab[tab2]:
 
 
     # TAB2 END -------------------------------------------------
-if display_tab[tab3]:
+if display_tab['tab3']:
         
     #########
     # TAB 3 #
@@ -288,7 +291,7 @@ if display_tab[tab3]:
 
     # TAB3 END -------------------------------------------------
 
-if display_tab[tab4]:
+if display_tab['tab4']:
 
     
     #########
@@ -370,7 +373,7 @@ if display_tab[tab4]:
 
     # TAB4 END -------------------------------------------------
 
-if display_tab[tab5]:
+if display_tab['tab5']:
     
         #########
         # TAB 5 #
@@ -437,11 +440,11 @@ if display_tab[tab5]:
                     st.table(stocks_df)
 
     # TAB5 END -------------------------------------------------
-if not display_tab[tab6]:
+if not display_tab['tab6']:
     with tab6:
         st.write('Debug tab is not active right now.')
 
-if display_tab[tab6]:
+if display_tab['tab6']:
 
     #########
     # TAB 6 #
@@ -460,7 +463,7 @@ if display_tab[tab6]:
     
     # TAB 6 END ---------------------------------------------------------------
 
-if display_tab[tab7]:
+if display_tab['tab7']:
 
     #########
     # TAB 7 #
