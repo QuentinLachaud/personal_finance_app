@@ -18,7 +18,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from src.classes import Asset, Debt
-from src.utils import project_returns, random_walk, make_net_worth_df, change_text_colour, generate_retirement_portfolio
+from src.utils import project_returns, random_walk, make_net_worth_df, change_text_colour, generate_retirement_portfolio, send_email
 
 from src.data import top_tickers
 from src.classes import streamlit_tab
@@ -26,9 +26,12 @@ import os
 ################
 # Email config #
 ################
+from dotenv import load_dotenv
 
+load_dotenv()
 domain_name = os.getenv('DOMAIN_NAME')
 api_key     = os.getenv('API_KEY')
+
 
 #################
 # Page settings #
@@ -36,6 +39,7 @@ api_key     = os.getenv('API_KEY')
 
 plt.style.use('dark_background')
 st.set_page_config(layout="wide")
+
 
 # Set up functionality above the tabs (9 columns)
 page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 1, 1, 1, 1, 1, 1, 1, 1])
@@ -56,8 +60,15 @@ with questions:
         user_msg = st.text_input('Your message here')
         
         if st.button('Send'):
-            text_received.append(user_msg)
-            st.success('Message sent!')
+            if send_email(domain=domain_name, 
+                            api_key=api_key,
+                            sender='Finance App User email <mailgun@sandbox0c9e2ec800744d16b2acc7161367079f.mailgun.org>',
+                            receiver='finance.app.queries@gmail.com',
+                            subject='User message',
+                            body=user_msg) == 200:
+                st.success('Message sent!')
+            else:
+                st.error('Message failed to send. Please try again later.')
 
 ###########################
 # Tab rendering functions #--------------------------
