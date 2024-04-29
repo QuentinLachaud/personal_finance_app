@@ -47,11 +47,11 @@ page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 
 with page_info:
 
     with st.popover("Welcome!"):
-        st.markdown("Welcome to the personal finance app. This app is designed to help \
+        st.markdown("""Welcome to the personal finance app. This app is designed to help \
                     you manage your finances and plan for the future. You can use the tabs \
                     at the top of the page to navigate between different sections of the app.\
                     \
-                    This is an early Alpha version. Many features are still in development!\")
+                    This is an early Alpha version. Many features are still in development!\""")
 
 with questions:
 
