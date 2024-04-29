@@ -50,7 +50,7 @@ with page_info:
         st.markdown("""Welcome to the personal finance app. This app is designed to help \
                     you manage your finances and plan for the future. You can use the tabs \
                     at the top of the page to navigate between different sections of the app.\
-                    \n*This is an early Alpha version. Many features are still in development!*""")
+                    \n\n*This is an early Alpha version. Many features are still in development!*""")
 
 with questions:
 
