@@ -40,7 +40,7 @@ api_key     = os.getenv('API_KEY')
 plt.style.use('dark_background')
 st.set_page_config(layout="wide")
 
-st.write(domain_name, api_key)
+#st.write(domain_name, api_key)
 # Set up functionality above the tabs (9 columns)
 page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 1, 1, 1, 1, 1, 1, 1, 1])
 
