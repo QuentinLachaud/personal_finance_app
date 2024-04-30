@@ -340,7 +340,7 @@ def render_mortgage_tab():
         interest    = st.number_input('Annual interest (e.g. 3.5%)', value=4.98, step=0.01)
         term        = st.number_input('Mortgage duration (years)', value=20)
         st.divider()
-        monthly_overpayment = st.slider('Overpayment ({currency_symbol} monthly)', value=0, min_value=0, max_value=500, step=25, help='It is worth noting you will _almost always_ be better off investing in a Global all-cap fund')
+        monthly_overpayment = st.slider(f'Overpayment ({currency_symbol} monthly)', value=50, min_value=0, max_value=500, step=25, help='It is worth noting you will _almost always_ be better off investing in a globally diversified all-cap fund. [read this](https://www.forbes.com/advisor/ca/mortgages/pay-off-mortgage-early-vs-investing/)')
         st.divider()
 
         
