@@ -13,6 +13,8 @@ from datetime import timedelta
 import yfinance as yf
 import time
 
+from streamlit_extras.buy_me_a_coffee import button
+
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -40,8 +42,11 @@ api_key     = os.getenv('API_KEY')
 plt.style.use('dark_background')
 st.set_page_config(layout="wide")
 
+
 #st.write(domain_name, api_key)
 # Set up functionality above the tabs (9 columns)
+
+    
 page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 1, 1, 1, 1, 1, 1, 1, 1])
 
 with page_info:
@@ -51,6 +56,8 @@ with page_info:
                     you manage your finances and plan for the future. You can use the tabs \
                     at the top of the page to navigate between different sections of the app.\
                     \n\n*This is an early Alpha version. Many features are still in development!*""")
+with col5:
+    button(username='personal.finance.app', floating=False)
 
 with questions:
 
