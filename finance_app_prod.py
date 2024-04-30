@@ -50,7 +50,6 @@ st.set_page_config(layout="wide")
 page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 1, 1, 1, 1, 1, 1, 1, 1])
 
 with page_info:
-
     with st.popover("Welcome!"):
         st.markdown("""Welcome to the personal finance app. This app is designed to help \
                     you manage your finances and plan for the future. You can use the tabs \
@@ -60,7 +59,7 @@ with page_info:
     currency_symbol = st.selectbox('Select a currency', list(['£', '$', '€', '₹', '¥']))
 
 with questions:
-    button(username='personal.finance.app', text='Support me!',  floating=False)
+    
     text_received = [] # Store messges here for now
 
     with st.popover(':email: :green[Message me!]'):
@@ -84,12 +83,16 @@ with questions:
                 st.success('Message sent!')
             else:
                 st.error('Message failed to send. Please try again later.')
+    
+    button(username='personal.finance.app', text='...Support this!',  floating=False)
+    
 
 ###########################
 # Tab rendering functions #--------------------------
 ###########################
 
 def render_compound_interest_tab():
+    
     st.title('Compound Interest Calculator')
     st.write(':grey[_Observe how a given investment grows over time given your inputs._]', help='Historical average % returns are used as baselines. Adjust as needed.')
 
@@ -194,8 +197,19 @@ def render_randomness_tab():
     st.line_chart(sims_df, use_container_width=True)
 
 def render_net_worth_tab():
-    st.title('Net Worth Calculator')
-    st.write(':grey[_Project your net worth into the future using your current assets, liabilities and contributions._]', help='Historical average % returns are used as baselines. Adjust as needed.')
+    title_col1, title_col2, title_col3, title_col4, title_col5 = st.columns([3, 1, 1, 1, 1])
+
+    with title_col1:
+        st.title('Net Worth Calculator')
+    with title_col1:
+        st.write(':grey[_Project your net worth into the future using your current assets, liabilities and contrbutions._]', help='Historical average % returns are used as baselines. Adjust as needed.')
+    
+    with title_col2:
+        net_worth_now_metric = st.empty()
+
+    with title_col3:
+        net_worth_then_metric = st.empty()
+    
     st.divider()
 
     col1, col2, col3 = st.columns([2, 2, 10])
@@ -267,8 +281,6 @@ def render_net_worth_tab():
             crypto_contrib    = st.number_input('Annual contrib.', value=1000, min_value=0, step=1000, key='crypto2')
             debt_contrib      = st.number_input('Annual contrib.', value=1000, min_value=0, step=100, key='debt2')
 
-        
-
     with col4:
 
         # Graphs and text
@@ -290,8 +302,6 @@ def render_net_worth_tab():
         property = Asset('property', property_input, property_contrib, property_ret)
         crypto   = Asset('crypto', crypto_input, crypto_contrib, crypto_ret)
         debt     = Asset('debt', debt_input, debt_contrib, debt_ret)
-
-
 
         assets = [cash, pension, stocks, property, crypto, debt]
 
@@ -328,6 +338,11 @@ def render_net_worth_tab():
         with st.expander('-- See table -- '):
             st.download_button(':floppy_disk:  Download Net Worth Table', str(net_worth_df), file_name='net_worth_{net_worth_slider}_year_projection.csv')
             st.table(net_worth_df)
+    
+    # Update metrics in title
+    net_worth_now_metric.metric(label='Net worth today', value=f'{currency_symbol} {net_worth:,.0f}')
+
+    net_worth_then_metric.metric(label=f'Net worth in :red[{net_worth_slider}] years', value=f'{currency_symbol} {future_net_worth:,.0f}', delta=f'(+ {future_net_worth - net_worth:,.0f})')
 
 def render_mortgage_tab():
     st.title('Mortgage payments calculator')
