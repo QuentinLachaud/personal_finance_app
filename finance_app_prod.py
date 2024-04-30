@@ -56,11 +56,9 @@ with page_info:
                     you manage your finances and plan for the future. You can use the tabs \
                     at the top of the page to navigate between different sections of the app.\
                     \n\n*This is an early Alpha version. Many features are still in development!*""")
-with col5:
-    button(username='personal.finance.app', text='Support me!',  floating=True)
 
 with questions:
-
+    button(username='personal.finance.app', text='Support me!',  floating=False)
     text_received = [] # Store messges here for now
 
     with st.popover(':green[Questions?]'):
