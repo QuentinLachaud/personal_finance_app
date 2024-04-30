@@ -84,7 +84,7 @@ with questions:
             else:
                 st.error('Message failed to send. Please try again later.')
     
-    button(username='personal.finance.app', text='...Support this!',  floating=False)
+    button(username='personal.finance.app', text='... $upport this!',  floating=False)
     
 
 ###########################
