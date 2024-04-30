@@ -336,7 +336,7 @@ def render_net_worth_tab():
 
     with col2:
         with st.expander('-- See table -- '):
-            st.download_button(':floppy_disk:  Download Net Worth Table', str(net_worth_df), file_name='net_worth_{net_worth_slider}_year_projection.csv')
+            st.download_button(':floppy_disk:  Download Net Worth Table', str(net_worth_df), file_name=f'net_worth_{net_worth_slider}_year_projection.csv')
             st.table(net_worth_df)
     
     # Update metrics in title
