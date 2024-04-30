@@ -510,7 +510,7 @@ def render_early_retirement_tab():
 
         investment    = st.number_input('Initial investment', value=0, min_value=0, max_value=10000000, step=1000)
         start_year    = st.date_input('start date', value=pd.datetime(2024,1,1))
-        simulations   = st.number_input('Simulations', value=1000, min_value=1, max_value=100000, step=100)
+        simulations   = st.number_input('Simulations', value=500, min_value=1, max_value=100000, step=100)
         years         = st.number_input('Years to project', value=20, min_value=1, max_value=100, step=1)
 
         periods       = st.number_input('Periods per year', value=1, min_value=1, max_value=365, step=1)
@@ -561,7 +561,7 @@ def render_early_retirement_tab():
             st.metric('Success rate', value=f'{success_pct:.1f} %', delta=None, help=f'Percentage of simulations that ended with a positive portfolio value after {years} years')
 
             # Plot the figure
-            sims_tick = st.checkbox('Show all simulations', value=False, help='Showing all traces slows things down a bit.')
+            sims_tick = st.checkbox('Show all simulations', value=True, help='Showing all traces slows things down a bit.')
             if sims_tick: 
 
                 fig = px.line(df_with_spreads, 
