@@ -47,7 +47,7 @@ st.set_page_config(layout="wide")
 # Set up functionality above the tabs (9 columns)
 
     
-page_info, col2, col3, col4, col5, col6, col7, col8, questions = st.columns([1, 1, 1, 1, 1, 1, 1, 1, 1])
+page_info, col2, col3, col4, col5, col6, questions = st.columns([1, 1, 1, 1, 1, 1, 1])
 
 with page_info:
     with st.popover("Welcome!"):
@@ -111,7 +111,7 @@ def render_compound_interest_tab():
                 
     # Calcs
     df       = project_returns(capital=starting_capital, annual_rate=return_rate / 100, years=time_period, annual_contribution=contribution)
-    df.index = [i.year for i in pd.date_range(str(start_date.year), freq= 'Y', periods=time_period)]
+    df.index = [i.year for i in pd.date_range(str(start_date.year), freq='Y', periods=time_period)]
     
     df['contrib']                = contribution
     df['contributions']          = df['contrib'].cumsum()
@@ -151,7 +151,7 @@ def render_compound_interest_tab():
         
         df.index = df.index.astype(str)
         with st.expander('See table'):
-            st.download_button(':floppy_disk:  Download table', str(df), file_name='compound_interest_projection.csv')
+            st.download_button(':floppy_disk:  Download table', str(df), file_name=f'compound_interest_{time_period}year_projection.csv')
             st.table(df)
 
     
@@ -202,7 +202,7 @@ def render_net_worth_tab():
     with title_col1:
         st.title('Net Worth Calculator')
     with title_col1:
-        st.write(':grey[_Project your net worth into the future using your current assets, liabilities and contrbutions._]', help='Historical average % returns are used as baselines. Adjust as needed.')
+        st.write(':grey[_Project your net worth into the future using your current assets, liabilities and contributions._]', help='Historical average % returns are used as baselines. Adjust as needed.')
     
     with title_col2:
         net_worth_now_metric = st.empty()
@@ -335,8 +335,9 @@ def render_net_worth_tab():
         st.write(f'Your net worth in {net_worth_slider} years will be {currency_symbol} {future_net_worth:,.0f}.')
 
     with col2:
+        date_str = datetime.datetime.now().strftime('%Y%m%d')
         with st.expander('-- See table -- '):
-            st.download_button(':floppy_disk:  Download Net Worth Table', str(net_worth_df), file_name=f'net_worth_{net_worth_slider}_year_projection.csv')
+            st.download_button(':floppy_disk:  Download Net Worth Table', str(net_worth_df), file_name=f'net_worth_{net_worth_slider}_year_projection_{date_str}.csv')
             st.table(net_worth_df)
     
     # Update metrics in title
