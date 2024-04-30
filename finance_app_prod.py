@@ -22,7 +22,7 @@ import plotly.graph_objects as go
 from src.classes import Asset, Debt
 from src.utils import project_returns, random_walk, make_net_worth_df, change_text_colour, generate_retirement_portfolio, send_email
 
-from src.data import top_tickers
+from src.data import top_tickers, generic_investor_inputs
 from src.classes import streamlit_tab
 import os
 ################
@@ -57,7 +57,7 @@ with page_info:
                     at the top of the page to navigate between different sections of the app.\
                     \n\n*This is an early Alpha version. Many features are still in development!*""")
 with col5:
-    button(username='personal.finance.app', floating=False)
+    button(username='personal.finance.app', text='Support me!',  floating=True)
 
 with questions:
 
@@ -195,43 +195,74 @@ def render_net_worth_tab():
 
     col1, col2, col3 = st.columns([2, 2, 10])
     with col1:
-        dob = st.number_input('What year were you born?', min_value=1900, value=1991, step=1 ,key='age')
+        dob = st.number_input('What year were you born?', min_value=1900, value=1989, step=1 ,key='age')
+    with col2:
+        spacer = st.empty()
+        use_avg_values = st.toggle('Use example inputs', value=False, help='Use average values for assets and liabilities to see how the app works.')
         
     with col3:
-        net_worth_slider = st.slider(label='Years into the future', min_value=1, max_value=80, step=1, key='project_future1')    
+        net_worth_slider      = st.slider(label='Investing years', value=15, min_value=1, max_value=80, step=1, key='invest_future')
+
             
     col1, col2, col3, col4 = st.columns([1.5, 1, 1.5, 10])  # input, return, contrib, graphs
+
+    if use_avg_values:
+            with col1:
+                # Assets value (average)
+                cash_input      = st.number_input('Cash savings', value=2500, min_value=0, step=1000, key='cash')
+                pension_input   = st.number_input('Pension value today', value=10000, min_value=0, step=1000, key='pension')
+                stocks_input    = st.number_input('Stocks invested', value=5000, min_value=0, step=1000, key='stocks')
+                property_input  = st.number_input('Property value', value=170000, min_value=0, step=1000, key='property')
+                crypto_input    = st.number_input('Crypto value', value=500, min_value=0, step=1000, key='crypto')
+                debt_input      = st.number_input('Outstanding debt', value=-145000, max_value=0, step=-1000, key='debt', help='Enter a negative value')
+
+            with col2:
+                cash_ret      = st.number_input('% return', value=-1.0, min_value=-10.0, step=.5, key=1)
+                pension_ret   = st.number_input('% return', value=5.0, min_value=-10.0, step=.5, key=2)
+                stocks_ret    = st.number_input('% return', value=8.0, min_value=-10.0, step=.5, key=3)
+                property_ret  = st.number_input('% return', value=3.5, min_value=-10.0, step=.5, key=4)
+                crypto_ret    = st.number_input('% return', value=3.0, min_value=-10.0, step=.5, key=5)
+                debt_ret      = st.number_input('% return', min_value=4.5, step=.5, key=6, help='Your mortgage rate')
             
-    with col1:
-                
-        # Assets value
-        cash_input      = st.number_input('Cash savings', value=1000, min_value=0, step=1000, key='cash')
-        pension_input   = st.number_input('Pension value today', value=1000, min_value=0, step=1000, key='pension')
-        stocks_input    = st.number_input('Stocks invested', value=1000, min_value=0, step=1000, key='stocks')
-        property_input  = st.number_input('Property value', value=1000, min_value=0, step=1000, key='property')
-        crypto_input    = st.number_input('Crypto value', value=1000, min_value=0, step=1000, key='crypto')
-        debt_input      = st.number_input('Outstanding debt', value=-1000, max_value=0, step=-1000, key='debt', help='Enter a negative value')
+            with col3:
+                # Contributions if avg values are used
+                cash_contrib      = st.number_input('Annual contrib.', value=2000, min_value=0, step=100, key='cash2')
+                pension_contrib   = st.number_input('Annual contrib.', value=4000, min_value=0, step=1000, key='pension2')
+                stocks_contrib    = st.number_input('Annual contrib.', value=2000, min_value=0, step=1000, key='stocks2')
+                property_contrib  = st.number_input('Annual contrib.', value=0, min_value=0, step=1000, key='property2')
+                crypto_contrib    = st.number_input('Annual contrib.', value=500, min_value=0, step=1000, key='crypto2')
+                debt_contrib      = st.number_input('Annual contrib.', value=9500, min_value=0, step=100, key='debt2')
 
-    with col2:
+    else:
+        with col1:   
+            # Assets value
+            cash_input      = st.number_input('Cash savings', value=1000, min_value=0, step=1000, key='cash')
+            pension_input   = st.number_input('Pension value today', value=1000, min_value=0, step=1000, key='pension')
+            stocks_input    = st.number_input('Stocks invested', value=1000, min_value=0, step=1000, key='stocks')
+            property_input  = st.number_input('Property value', value=1000, min_value=0, step=1000, key='property')
+            crypto_input    = st.number_input('Crypto value', value=1000, min_value=0, step=1000, key='crypto')
+            debt_input      = st.number_input('Outstanding debt', value=-1000, max_value=0, step=-1000, key='debt', help='(Your outstanding mortgage)')
+        
+        with col2:
+            # Assets returns
+            cash_ret      = st.number_input('% return', value=-1.0, min_value=-10.0, step=.5, key=1)
+            pension_ret   = st.number_input('% return', value=5.0, min_value=-10.0, step=.5, key=2)
+            stocks_ret    = st.number_input('% return', value=8.0, min_value=-10.0, step=.5, key=3)
+            property_ret  = st.number_input('% return', value=3.5, min_value=-10.0, step=.5, key=4)
+            crypto_ret    = st.number_input('% return', value=3.0, min_value=-10.0, step=.5, key=5)
+            debt_ret      = st.number_input('% return', min_value=4.5, step=.5, key=6, help='Your mortgage rate')
+        
 
-        # Assets expected annual return
-        empty = st.empty()
-        cash_ret      = st.number_input('% return', value=-3.0, min_value=-10.0, step=.5, key=1)
-        pension_ret   = st.number_input('% return', value=5.0, min_value=-10.0, step=.5, key=2)
-        stocks_ret    = st.number_input('% return', value=8.0, min_value=-10.0, step=.5, key=3)
-        property_ret  = st.number_input('% return', value=3.5, min_value=-10.0, step=.5, key=4)
-        crypto_ret    = st.number_input('% return', value=3.0, min_value=-10.0, step=.5, key=5)
-        debt_ret      = st.number_input('% return', min_value=4.0, step=.5, key=6, help='Your mortgage rate')
+        with col3:
+            # Assets annual contribution
+            cash_contrib      = st.number_input('Annual contrib.', value=1000, min_value=0, step=100, key='cash2')
+            pension_contrib   = st.number_input('Annual contrib.', value=1000, min_value=0, step=1000, key='pension2')
+            stocks_contrib    = st.number_input('Annual contrib.', value=1000, min_value=0, step=1000, key='stocks2')
+            property_contrib  = st.number_input('Annual contrib.', value=1000, min_value=0, step=1000, key='property2')
+            crypto_contrib    = st.number_input('Annual contrib.', value=1000, min_value=0, step=1000, key='crypto2')
+            debt_contrib      = st.number_input('Annual contrib.', value=1000, min_value=0, step=100, key='debt2')
 
-    with col3:
-
-        # Assets annual contribution
-        cash_contrib      = st.number_input('Annual contrib.', value=0, min_value=0, step=100, key='cash2')
-        pension_contrib   = st.number_input('Annual contrib.', value=0, min_value=0, step=1000, key='pension2')
-        stocks_contrib    = st.number_input('Annual contrib.', value=0, min_value=0, step=1000, key='stocks2')
-        property_contrib  = st.number_input('Annual contrib.', value=0, min_value=0, step=1000, key='property2')
-        crypto_contrib    = st.number_input('Annual contrib.', value=0, min_value=0, step=1000, key='crypto2')
-        debt_contrib      = st.number_input('Annual contrib.', min_value=0, step=100, key='debt2')
+        
 
     with col4:
 
@@ -372,7 +403,7 @@ def render_stocks_tab():
     today = datetime.datetime.now().strftime(format='%Y-%m-%d')
 
     # Retrieve historical data
-    sp500               = yf.download('^GSPC', start='1985-01-01', end='2025-04-01')
+    sp500               = yf.download('GSPC', start='1985-01-01', end='2025-04-01')
     sp500.columns       = [i.lower() for i in sp500.columns]
     sp500['close_diff'] = sp500['close'].pct_change()
     
