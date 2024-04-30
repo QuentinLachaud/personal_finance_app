@@ -195,7 +195,7 @@ def render_randomness_tab():
 
 def render_net_worth_tab():
     st.title('Net Worth Calculator')
-    st.write(':grey[_Project your net worth using your current assets and liabilities._]', help='Historical average % returns are used as baselines. Adjust as needed.')
+    st.write(':grey[_Project your net worth into the future using your current assets, liabilities and contributions._]', help='Historical average % returns are used as baselines. Adjust as needed.')
     st.divider()
 
     col1, col2, col3 = st.columns([2, 2, 10])
