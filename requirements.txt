@@ -11,3 +11,4 @@ pip==23.0.1
 plotly==5.9.0
 yfinance==0.2.38
 python-dotenv==1.0.1
+streamlit-extras==0.4.2
