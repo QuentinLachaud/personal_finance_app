@@ -47,7 +47,7 @@ st.set_page_config(layout="wide")
 # Set up functionality above the tabs (9 columns)
 
     
-page_info, col2, col3, col4, col5, col6, questions = st.columns([1, 1, 1, 1, 1, 1, 1])
+page_info, col2, col3, col4, col5, questions = st.columns([1, 1, 1, 1, 1, 1])
 
 with page_info:
     with st.popover("Welcome!"):
@@ -236,7 +236,7 @@ def render_net_worth_tab():
                 debt_input      = st.number_input('Outstanding debt', value=-145000, max_value=0, step=-1000, key='debt', help='Enter a negative value')
 
             with col2:
-                cash_ret      = st.number_input('% return', value=-1.0, min_value=-10.0, step=.5, key=1)
+                cash_ret      = st.number_input('% return', value=1.0, min_value=-10.0, step=.5, key=1)
                 pension_ret   = st.number_input('% return', value=5.0, min_value=-10.0, step=.5, key=2)
                 stocks_ret    = st.number_input('% return', value=8.0, min_value=-10.0, step=.5, key=3)
                 property_ret  = st.number_input('% return', value=3.5, min_value=-10.0, step=.5, key=4)
@@ -264,7 +264,7 @@ def render_net_worth_tab():
         
         with col2:
             # Assets returns
-            cash_ret      = st.number_input('% return', value=-1.0, min_value=-10.0, step=.5, key=1)
+            cash_ret      = st.number_input('% return', value=1.0, min_value=-10.0, step=.5, key=1)
             pension_ret   = st.number_input('% return', value=5.0, min_value=-10.0, step=.5, key=2)
             stocks_ret    = st.number_input('% return', value=8.0, min_value=-10.0, step=.5, key=3)
             property_ret  = st.number_input('% return', value=3.5, min_value=-10.0, step=.5, key=4)
@@ -488,9 +488,9 @@ def render_debug_tab():
 
 def render_early_retirement_tab():
 
-    title_col1, title_col2 = st.columns([1, 1])
+    title_col1, title_col2 = st.columns([1, 2])
     with title_col1:
-        st.title('Investment Horizon Simulator')
+        st.title('Investment Horizon')
         st.write(':grey[_Project retirement viability from investments using Monte Carlo simulation_]')
     st.divider()
 
