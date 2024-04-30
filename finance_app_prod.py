@@ -61,11 +61,11 @@ with questions:
     button(username='personal.finance.app', text='Support me!',  floating=False)
     text_received = [] # Store messges here for now
 
-    with st.popover(':green[Questions?]'):
+    with st.popover(':email: :green[Message me!]'):
 
         st.markdown('Send message directly to the site admin:')
         st.markdown('*(e.g. questions, feature requests, bugs!)*')
-        user_msg = st.text_input('Your message here')
+        user_msg = st.text_area('Your message here')
         
         if st.button('Send'):
             if send_email(domain=domain_name, 
