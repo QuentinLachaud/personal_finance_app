@@ -65,14 +65,19 @@ with questions:
 
         st.markdown('Send message directly to the site admin:')
         st.markdown('*(e.g. questions, feature requests, bugs!)*')
-        user_msg = st.text_area('Your message here')
+        user_name    = st.text_input('Your name')
+        user_subject = st.text_input('Subject')
+        user_msg     = st.text_area('Your message here')
+
+        # Formatting email
+        user_msg = f'From: {user_name}\n\n{user_msg}'
         
         if st.button('Send'):
             if send_email(domain=domain_name, 
                             api_key=api_key,
                             sender='Finance App User email <mailgun@sandbox0c9e2ec800744d16b2acc7161367079f.mailgun.org>',
                             receiver='finance.app.queries@gmail.com',
-                            subject='User message',
+                            subject=f'{user_subject}',
                             body=user_msg) == 200:
                 st.success('Message sent!')
             else:
