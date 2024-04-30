@@ -56,6 +56,8 @@ with page_info:
                     you manage your finances and plan for the future. You can use the tabs \
                     at the top of the page to navigate between different sections of the app.\
                     \n\n*This is an early Alpha version. Many features are still in development!*""")
+        
+    currency_symbol = st.selectbox('Select a currency', list(['£', '$', '€', '₹', '¥']))
 
 with questions:
     button(username='personal.finance.app', text='Support me!',  floating=False)
@@ -124,12 +126,12 @@ def render_compound_interest_tab():
         pct_interest_total = np.round(interest_income / total_value * 100, 2)
 
         #Visuals and text
-        st.write(f'Projection of £ {starting_capital:,.0f} invested capital over {time_period} years.')
+        st.write(f'Projection of {currency_symbol} {starting_capital:,.0f} invested capital over {time_period} years.')
         if contribution == 0:
             st.write(f'This includes a gross return rate of {return_rate} %.')
         else:
-            st.write(f'This includes a gross return rate of {return_rate} %, with annual contributions of £ {int(contribution):,}. (£ {int(contribution/12)} / month.)')
-        st.write(f"The projected value after {years} years is £ {int(total_value):,.0f}. £ {int(interest_income):,.0f} earned from interest alone, or {pct_interest_total} % of all gains.")
+            st.write(f'This includes a gross return rate of {return_rate} %, with annual contributions of {currency_symbol} {int(contribution):,}. ({currency_symbol} {int(contribution/12)} / month.)')
+        st.write(f"The projected value after {years} years is {currency_symbol} {int(total_value):,.0f}. {currency_symbol} {int(interest_income):,.0f} earned from interest alone, or {pct_interest_total} % of all gains.")
     
         # Create charts based on selected checkboxes
         selected_columns = []
@@ -200,8 +202,8 @@ def render_net_worth_tab():
     with col1:
         dob = st.number_input('What year were you born?', min_value=1900, value=1989, step=1 ,key='age')
     with col2:
-        spacer = st.empty()
-        use_avg_values = st.toggle('Use example inputs', value=False, help='Use average values for assets and liabilities to see how the app works.')
+        spacer = st.write('Use example inputs')
+        use_avg_values = st.toggle(' ', value=True, help='Use average values for assets and liabilities to see how the app works.')
         
     with col3:
         net_worth_slider      = st.slider(label='Investing years', value=15, min_value=1, max_value=80, step=1, key='invest_future')
@@ -319,8 +321,8 @@ def render_net_worth_tab():
     col1, col2 = st.columns([4, 8])
     with col1:
         st.divider()
-        st.write(f'Your current net worth is £ **{net_worth:,.0f}**', )
-        st.write(f'Your net worth in {net_worth_slider} years will be £ {future_net_worth:,.0f}.')
+        st.write(f'Your current net worth is {currency_symbol} **{net_worth:,.0f}**', )
+        st.write(f'Your net worth in {net_worth_slider} years will be {currency_symbol} {future_net_worth:,.0f}.')
 
     with col2:
         with st.expander('-- See table -- '):
@@ -338,7 +340,7 @@ def render_mortgage_tab():
         interest    = st.number_input('Annual interest (e.g. 3.5%)', value=4.98, step=0.01)
         term        = st.number_input('Mortgage duration (years)', value=20)
         st.divider()
-        monthly_overpayment = st.slider('Overpayment (£ monthly)', value=0, min_value=0, max_value=500, step=25, help='It is worth noting you will _almost always_ be better off investing in a Global all-cap fund')
+        monthly_overpayment = st.slider('Overpayment ({currency_symbol} monthly)', value=0, min_value=0, max_value=500, step=25, help='It is worth noting you will _almost always_ be better off investing in a Global all-cap fund')
         st.divider()
 
         
@@ -346,7 +348,7 @@ def render_mortgage_tab():
         mortgage_house_op  = Debt('house mortgage', loan_amount=loan_amount, term=term, interest=interest, monthly_overpayment=monthly_overpayment)
 
         repayment        = mortgage_house.calc_monthly_repayment() + monthly_overpayment
-        repayment_widget = st.metric('Monhtly Repayment:', value=f'£ {np.round(repayment, 0)}', delta=f'+ £ {monthly_overpayment} overpayment')
+        repayment_widget = st.metric('Monhtly Repayment:', value=f'{currency_symbol} {np.round(repayment, 0)}', delta=f'+ {currency_symbol} {monthly_overpayment} overpayment')
 
         mortgage_house_df    = mortgage_house.annual_projection(term, df=True)
         mortgage_house_df_op = mortgage_house_op.annual_projection(term, df=True)
@@ -354,32 +356,32 @@ def render_mortgage_tab():
         if monthly_overpayment > 0:
 
             output_df                   = pd.concat([mortgage_house_df, mortgage_house_df_op], axis=1)
-            output_df.columns           = ['No overpayment', f'£{monthly_overpayment} extra per month']
+            output_df.columns           = ['No overpayment', f'{currency_symbol}{monthly_overpayment} extra per month']
             output_df['interest saved'] = np.abs(output_df.iloc[:, 0] - output_df.iloc[:, 1] - monthly_overpayment * 12)
             
-            output_df = output_df[output_df[f'£{monthly_overpayment} extra per month'] > 0]
+            output_df = output_df[output_df[f'{currency_symbol}{monthly_overpayment} extra per month'] > 0]
             
             output_df = output_df.apply(lambda x: np.round(x, 0))
 
             
             
 
-            years       = len(output_df)#[output_df[f'£{monthly_overpayment} extra per month'] != 0])
+            years       = len(output_df)#[output_df[f'{currency_symbol}{monthly_overpayment} extra per month'] != 0])
             years_saved = term - years
 
             total_paid = int(repayment * 12 * years) + monthly_overpayment * 12 * years
 
-            st.markdown(f"- Overpaying £ {monthly_overpayment} per month could save £ {output_df['interest saved'].iloc[-1]:,.0f} over the full term.")
-            st.markdown(f"- You will pay £ {total_paid:,.0f} over {years} years of your mortgage, saving {years_saved} {'year' if years_saved < 2 else 'years'}.")
-            st.markdown(f'- (£{total_paid / loan_amount:,.2f} per £1 borrowed.)')
+            st.markdown(f"- Overpaying {currency_symbol} {monthly_overpayment} per month could save {currency_symbol} {output_df['interest saved'].iloc[-1]:,.0f} over the full term.")
+            st.markdown(f"- You will pay {currency_symbol} {total_paid:,.0f} over {years} years of your mortgage, saving {years_saved} {'year' if years_saved < 2 else 'years'}.")
+            st.markdown(f'- ({currency_symbol}{total_paid / loan_amount:,.2f} per {currency_symbol}1 borrowed.)')
 
             
         else:
             total_paid = int(repayment * 12 * term)
             output_df  = mortgage_house_df
 
-            st.write(f"You will pay £ {total_paid:,.0f} over the full {term} years of your mortgage.")
-            st.write(f'(£{total_paid / loan_amount:,.2f} per £1 borrowed.)')
+            st.write(f"You will pay {currency_symbol} {total_paid:,.0f} over the full {term} years of your mortgage.")
+            st.write(f'({currency_symbol}{total_paid / loan_amount:,.2f} per {currency_symbol}1 borrowed.)')
 
             
     with col3:
@@ -644,7 +646,7 @@ def render_early_retirement_tab():
         with title_subcols[2]:
             median_outcome = int(df_with_spreads['median'].iloc[-1])
             gains   = median_outcome - investment
-            st.metric('Median Outcome', value=f"£ {median_outcome:,.0f}", delta=f"£ {gains:,.0f}", delta_color='normal')
+            st.metric('Median Outcome', value=f"{currency_symbol} {median_outcome:,.0f}", delta=f"{currency_symbol} {gains:,.0f}", delta_color='normal')
         
         with title_subcols[3]:
             st.metric('Simulations', value=f'{simulations}')
