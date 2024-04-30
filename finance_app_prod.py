@@ -385,7 +385,7 @@ def render_mortgage_tab():
 
             
     with col3:
-        chart_type = st.radio('Chart type', ['line', 'bar'], index=0)
+        chart_type = st.radio('Chart type', ['line', 'bar'], index=1)
 
     with col2:
         st.markdown('### Loan repayment projection')
