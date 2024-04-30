@@ -458,9 +458,7 @@ def render_stocks_tab():
                 with st.spinner('Fetching all the sToNkS...'):
                     time.sleep(1)
             stocks_df = stocks_df[top_tickers.keys()]
-            # stocks_df = stocks_df[top_tickers.keys()]
         
-    
     with col2:
         from src.data import intervals
         smoothing_interval = st.select_slider('interval', options=intervals.keys())
