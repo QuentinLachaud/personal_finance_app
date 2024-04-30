@@ -22,7 +22,7 @@ import plotly.graph_objects as go
 from src.classes import Asset, Debt
 from src.utils import project_returns, random_walk, make_net_worth_df, change_text_colour, generate_retirement_portfolio, send_email
 
-from src.data import top_tickers, generic_investor_inputs
+from src.data import top_tickers
 from src.classes import streamlit_tab
 import os
 ################
