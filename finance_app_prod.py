@@ -342,7 +342,7 @@ def render_net_worth_tab():
     # Update metrics in title
     net_worth_now_metric.metric(label='Net worth today', value=f'{currency_symbol} {net_worth:,.0f}')
 
-    net_worth_then_metric.metric(label=f'Net worth in :red[{net_worth_slider}] years', value=f'{currency_symbol} {future_net_worth:,.0f}', delta=f'(+ {future_net_worth - net_worth:,.0f})')
+    net_worth_then_metric.metric(label=f'Net worth in :red[{net_worth_slider}] years', value=f'{currency_symbol} {future_net_worth:,.0f}', delta=f'(+ {currency_symbol}{future_net_worth - net_worth:,.0f})')
 
 def render_mortgage_tab():
     st.title('Mortgage payments calculator')
