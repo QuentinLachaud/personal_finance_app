@@ -197,7 +197,7 @@ def render_randomness_tab():
     st.line_chart(sims_df, use_container_width=True)
 
 def render_net_worth_tab():
-    title_col1, title_col2, title_col3, title_col4, title_col5 = st.columns([3, 1, 1, 1, 1])
+    title_col1, title_col2, title_col3, title_col4 = st.columns([3, 1, 1, 1])
 
     with title_col1:
         st.title('Net Worth Calculator')
