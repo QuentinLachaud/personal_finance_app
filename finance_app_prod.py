@@ -497,7 +497,7 @@ def render_early_retirement_tab():
     with col1:
         inflation_toggle = st.toggle('Adjust for inflation?', value=False, help='i.e. set annual inflation at 3.8%')
         if inflation_toggle:
-            st.write(':yellow[_Showing real returns_]', help='Projection will show value with today\s buying power')
+            st.write(':green[_Showing real returns_]', help='Projection will show value with today\s buying power')
         else:
             st.write(':red[Results *not* adjusted for inflation]')
     # with col2:
