@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/quentinlachaud/Documents/Documents - Quacbook/code/personal_finance_app/finance-app/bin/python3" "$0" "$@"
-' '''
+#!/Users/quentinlachaud/code/personal_finance_app/finance-app-env/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

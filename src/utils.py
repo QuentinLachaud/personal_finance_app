@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import requests
-import dotenv
+# import dotenv
 
 from src.classes import Asset
 

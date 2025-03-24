@@ -25,14 +25,15 @@ from src.utils import project_returns, random_walk, make_net_worth_df, change_te
 from src.data import top_tickers
 from src.classes import streamlit_tab
 import os
+
 ################
 # Email config #
 ################
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
-domain_name = os.getenv('DOMAIN_NAME')
-api_key     = os.getenv('API_KEY')
+# load_dotenv()
+# domain_name = os.getenv('DOMAIN_NAME')
+# api_key     = os.getenv('API_KEY')
 
 
 #################
@@ -425,7 +426,7 @@ def render_stocks_tab():
 
     # Retrieve historical data
     sp500               = yf.download('GSPC', start='1985-01-01', end='2025-04-01')
-    sp500.columns       = [i.lower() for i in sp500.columns]
+    sp500.columns       = [i[0].lower() for i in sp500.columns]
     sp500['close_diff'] = sp500['close'].pct_change()
     
     col1, col2 = st.columns([1, 2])
@@ -492,7 +493,7 @@ def render_early_retirement_tab():
         st.write(':grey[_Project retirement viability from investments using Monte Carlo simulation_]')
     st.divider()
 
-    col1, col2 = st.columns([3, 10])
+    col1, col2 = st.columns([4, 6])
 
     with col1:
         inflation_toggle = st.toggle('Adjust for inflation?', value=False, help='i.e. set annual inflation at 3.8%')
@@ -507,7 +508,7 @@ def render_early_retirement_tab():
     with col1:
 
         investment    = st.number_input('Initial investment', value=0, min_value=0, max_value=10000000, step=1000)
-        start_year    = st.date_input('start date', value=pd.datetime(2024,1,1))
+        start_year    = st.date_input('start date', value=pd.to_datetime(datetime.datetime.today()))
         simulations   = st.number_input('Simulations', value=500, min_value=1, max_value=100000, step=100)
         years         = st.number_input('Years to project', value=20, min_value=1, max_value=100, step=1)
 
@@ -596,7 +597,7 @@ def render_early_retirement_tab():
                 # Set the figure dimensions
                 fig.update_layout(
                     width=1000,  
-                    height=600,
+                    height=1300,
                 )
 
                 # Plot the figure using Streamlit
